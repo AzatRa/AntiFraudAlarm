@@ -28,6 +28,11 @@ public class AlarmSound : MonoBehaviour
 
     private void Start()
     {
+        Restart();
+    }
+
+    private void Restart()
+    {
         _alarmTrigger.OnActivated += OnTriggerActivate;
         _alarmTrigger.OnDeactivated += OnTriggerDeactivate;
     }
@@ -51,6 +56,7 @@ public class AlarmSound : MonoBehaviour
 
     private void OnTriggerActivate()
     {
+        _alarmTrigger.OnActivated -= OnTriggerActivate;
         _targetVolume = _maxVolume;
 
         if (_audioSource != null)
@@ -73,6 +79,7 @@ public class AlarmSound : MonoBehaviour
 
     private void OnTriggerDeactivate()
     {
+        _alarmTrigger.OnDeactivated -= OnTriggerDeactivate;
         _targetVolume = _minVolume;
 
         if (_volumeCoroutine != null)
@@ -82,5 +89,7 @@ public class AlarmSound : MonoBehaviour
 
         if (_audioSource.volume == _minVolume)
             _audioSource.Stop();
+
+        Restart();
     }
 }

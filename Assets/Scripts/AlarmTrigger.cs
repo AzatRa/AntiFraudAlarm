@@ -10,7 +10,6 @@ public class AlarmTrigger : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Thief>(out _))
         {
-            //_alarmSound.OnActivate();
             OnActivated?.Invoke();
         }
     }
@@ -19,7 +18,6 @@ public class AlarmTrigger : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Thief>(out _))
         {
-            //_alarmSound.OnDeactivate();
             OnDeactivated?.Invoke();
         }
     }
