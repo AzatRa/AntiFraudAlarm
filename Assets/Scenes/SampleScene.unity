@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 208388986}
   - component: {fileID: 208388987}
   - component: {fileID: 208388988}
+  - component: {fileID: 208388989}
   m_Layer: 0
   m_Name: scripts
   m_TagString: Untagged
@@ -263,6 +264,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &208388989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208388984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edaccb273c716124294f11e525ddd75c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputReader
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,6 +1059,7 @@ GameObject:
   - component: {fileID: 1083106005}
   - component: {fileID: 1083106004}
   - component: {fileID: 1083106003}
+  - component: {fileID: 1083106010}
   - component: {fileID: 1083106008}
   - component: {fileID: 1083106009}
   m_Layer: 0
@@ -1191,6 +1205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   _moveSpeed: 15
   _rotationSpeed: 40
+  _jumpForce: 20
 --- !u!114 &1083106009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,6 +1218,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96cf866492eeb914a86ee918cf5c86d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Thief
+--- !u!114 &1083106010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083106002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112360c1b1ded274eb1c489f470d9c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  _inputReader: {fileID: 208388989}
+  _mover: {fileID: 1083106008}
 --- !u!1 &1122349907
 GameObject:
   m_ObjectHideFlags: 0

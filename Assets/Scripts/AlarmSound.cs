@@ -9,7 +9,7 @@ public class AlarmSound : MonoBehaviour
     private AudioSource _audioSource;
     private float _maxVolume = 1.0f;
     private float _minVolume = 0f;
-    private float _fadeSpeed = 0.01f;
+    private float _fadeSpeed = 0.1f;
     private float _targetVolume = 0f;
 
     private Coroutine _volumeCoroutine;
@@ -44,7 +44,7 @@ public class AlarmSound : MonoBehaviour
     {
         while (_audioSource.volume != _targetVolume)
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _fadeSpeed);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _fadeSpeed * Time.deltaTime);
             yield return null;
         }
     }
