@@ -1,13 +1,18 @@
+using System.Collections;
 using UnityEngine;
 
 public class AlarmSound : MonoBehaviour
 {
     [SerializeField] private AudioClip _alarmSound;
+    [SerializeField] private AlarmTrigger _alarmTrigger;
+
     private AudioSource _audioSource;
     private float _maxVolume = 1.0f;
     private float _minVolume = 0f;
     private float _fadeSpeed = 0.01f;
     private float _targetVolume = 0f;
+
+    private Coroutine _volumeCoroutine;
 
     private void Awake()
     {
@@ -21,9 +26,10 @@ public class AlarmSound : MonoBehaviour
         _audioSource.volume = _minVolume;
     }
 
-    private void Update()
+    private void Start()
     {
-        _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _fadeSpeed);
+        _alarmTrigger.OnActivated += OnTriggerActivate;
+        _alarmTrigger.OnDeactivated += OnTriggerDeactivate;
     }
 
     private void PlaySound()
@@ -34,7 +40,16 @@ public class AlarmSound : MonoBehaviour
         }
     }
 
-    public void OnActivate()
+    private IEnumerator FadeVolumeCoroutine()
+    {
+        while (_audioSource.volume != _targetVolume)
+        {
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _fadeSpeed);
+            yield return null;
+        }
+    }
+
+    private void OnTriggerActivate()
     {
         _targetVolume = _maxVolume;
 
@@ -49,11 +64,21 @@ public class AlarmSound : MonoBehaviour
         {
             Debug.LogError("_audioSource не назначен");
         }
+
+        if (_volumeCoroutine  != null)
+            StopCoroutine(_volumeCoroutine);
+
+        _volumeCoroutine = StartCoroutine(FadeVolumeCoroutine());
     }
 
-    public void OnDeactivate()
+    private void OnTriggerDeactivate()
     {
         _targetVolume = _minVolume;
+
+        if (_volumeCoroutine != null)
+            StopCoroutine(_volumeCoroutine);
+
+        _volumeCoroutine = StartCoroutine(FadeVolumeCoroutine());
 
         if (_audioSource.volume == _minVolume)
             _audioSource.Stop();

@@ -1,16 +1,26 @@
+using System;
 using UnityEngine;
 
 public class AlarmTrigger : MonoBehaviour
 {
-    [SerializeField] private AlarmSound _alarmSound;
+    public event Action OnActivated;
+    public event Action OnDeactivated;
 
     private void OnTriggerEnter(Collider other)
     {
-        _alarmSound.OnActivate();
+        if (other.gameObject.TryGetComponent<Thief>(out _))
+        {
+            //_alarmSound.OnActivate();
+            OnActivated?.Invoke();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _alarmSound.OnDeactivate();
+        if (other.gameObject.TryGetComponent<Thief>(out _))
+        {
+            //_alarmSound.OnDeactivate();
+            OnDeactivated?.Invoke();
+        }
     }
 }
